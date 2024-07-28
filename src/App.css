@@ -1,38 +1,468 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500&display=swap');
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+li a {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 1.3em;
+  color: black;
+  opacity: 0.7;
+  text-decoration: none;
+}
+
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 5%;
+  background-color: rgb(232, 156, 99);
+}
+
+.nav_links {
+  list-style: none;
+}
+
+.nav_links li {
+  display: inline-block;
+  padding: 0 20px;
+}
+
+.nav_links li a {
+  transition: all 0.4s ease 0s;
+}
+
+.nav_links li a:hover {
+  opacity: 1;
+}
+
+.logo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; 
+}
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.designer {
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 400;
+  /* margin: 0px 5px; */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.errors {
+  color: red;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+label {
+  display: block;
+  margin-bottom: 15px;
+}
+
+label > input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 5px;
+}
+
+.errors {
+  color: red;
+  font-size: 0.875em;
+  margin-top: 5px;
+  height: 1em; /* Ensure consistent spacing even if no error */
+}
+
+button {
+  background-color: #eee8e2;
+  color: #080303;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 1em;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #decbb9;
+}
+
+/* styles for Outlet */
+.content {
+  padding: 20px;
+  background-color:  rgb(227, 201, 182);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+/* CSS for Register Page */
+
+
+.registerForm {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+  font-size: 1.3em;
+  width: 500px
+}
+
+/* Homepage css */
+.logoMain {
+  border-radius: 50%;
+  max-width: 475px; 
+}
+
+/* Store.css */
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  margin: 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+.store-layout {
+  display: flex;
+  flex: 1;
+  padding: 20px;
+  position: relative; /* Ensures the fixed checkout can be positioned relative to this container */
+}
+
+.products-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  background-color: #f5f5f5;
+  padding: 20px;
+  margin-right: 420px; /* Create space for the fixed checkout */
+}
+
+.fruit-catalog {
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+}
+
+.fruit-name {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.fruit-price,
+.fruit-stock {
+  font-size: 1em;
+  margin: 5px 0;
+}
+
+.quantity-input {
+  width: 50px;
+  padding: 5px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+/* Checkout sidebar styling */
+.products-checkout {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  height: 73vh; /* Reduced the height to make sure it does not obstruct navbar*/
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.products-checkout h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+}
+
+.products-checkout ol {
+  padding-left: 20px;
+  margin: 10px 0;
+  list-style-type: decimal;
+}
+
+.products-checkout li {
+  margin-bottom: 5px;
+}
+
+.products-checkout div {
+  margin: 10px 0;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* OrderFulfillment */
+.order-fulfillment-container {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px grey;
+}
+
+.order-fulfillment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.order-fulfillment-table th, .order-fulfillment-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.order-fulfillment-table ol {
+  padding-left: 20px;
+}
+
+.order-fulfillment-table ol li {
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+
+/* OrderHistory */
+
+.order-history-container {
+  margin: 20px auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px grey;
+}
+
+.order-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.order-history-table th, .order-history-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.order-history-table ol {
+  padding-left: 20px;
+}
+
+.order-history-table ol li {
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+/* Inventory */
+
+.add-fruit-table {
+  background-color: #beb5b5;
+  padding: 0.5em;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 1em;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  display: block; /* Ensure the table can shrink in width */
+  aspect-ratio: 5 / 1;
+}
+
+.add-fruit-table input {
+  width: 100%;
+  max-width: 100%; /* Allow inputs to use full width available */
+  padding: 0.5em;
+  box-sizing: border-box; /* Include padding in the width */
+}
+
+
+.add-fruit-table th, .add-fruit-table td {
+  border: collapse;
+  padding: 8px;
+  text-align: left;
+}
+
+.inventory-container {
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px grey;
+}
+
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.inventory-table th, .inventory-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.inline-block {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.amend-quantity {
+  width: 60px;
+  padding: 5px;
+  margin-right: 10px; /* Space between input and button */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 700px) {
+
+  .Navbar {
+    display: block;
+    margin: 0;
+    padding: 5px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .nav_links li {
+    width: 100%;
+    text-align: center;
+    margin: 5px 0;
+  }
+
+  li a {
+    font-size: 1.1em;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  h1, h2 {
+    font-size:smaller;
+  }
+
+  .logoMain {
+    max-width: 220px; 
+  }
+
+  .registerForm {
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  .products-grid {
+    margin-right: 0;
+    padding: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Allow as many columns as can fit */
+    padding-bottom: 150px; /* Adjust the padding to create space at the bottom */
+  }
+
+  .fruit-catalog {
+    padding: 10px 50px;
+  }
+
+  .products-checkout {
+    width: 100%;
+    max-height: 30vh;
+    border-radius: 0;
+    padding: 15px;
+  }
+
+  .order-fulfillment-container,
+  .order-history-container,
+  .inventory-container {
+    margin: 10px 5%;
+    padding: 10px;
+    width: 90%;
+    font-size: xx-small;
+  }
+  .order-fulfillment-table th, 
+  .order-fulfillment-table td, 
+  .inventory-table th, 
+  .inventory-table td, 
+  .add-fruit-table th, 
+  .add-fruit-table td   {
+    padding: 2px;
+  }
+
+  button {
+    width: auto;
+    margin: 5px 0;
+    padding: 10px;
+  }
+
+  .quantity-input {
+    width: 40px;
+    padding: 5px;
+    margin: 5px;
+  }
+
+  .content {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  input {
+    width: auto;
+    height: auto;
+    font-size: 1.3em;
+    padding: 0px;
+    margin: 0px;
+    font-size: xx-small;
+  }
+
+  .registerForm label{
+    font-size: 0.8em;
   }
 }
+
+
+
+
+
+
+
+
+
+
