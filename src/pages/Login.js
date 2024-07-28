@@ -45,12 +45,14 @@ function Login() {
       password: password,
     }).then((response) => {
         alert(response.data.message);
-        console.log(response.data);
         localStorage.setItem("accessToken", response.data.token);
         setAuthState({ username: response.data.username, id: response.data.id, status: true, role: response.data.role });
-        navigate("/store");
-      }
-    )
+        if (response.data.role === "customer") {
+          navigate("/store");
+        } else if (response.data.role === "admin") {
+          navigate("/fulfillment");
+        };
+    })
     .catch((error) => {
       if (error.response) {
         // Set errorMessage from the server's response

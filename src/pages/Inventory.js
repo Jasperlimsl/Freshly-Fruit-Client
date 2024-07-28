@@ -12,7 +12,6 @@ function Inventory() {
 
   useEffect(() => {
     axios.get(`${apiUrl}/store`).then((response) => {
-      console.log(response);
       setListOfFruits(response.data);
     }).catch((error) =>{
       if (error.response) {
@@ -43,7 +42,6 @@ function Inventory() {
     }, { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
     }).then((response) => {
-      console.log(response);
       setListOfFruits(prevFruits => {
         return prevFruits.map(fruit => {
           if (fruit.id === fruitId) {
@@ -52,6 +50,7 @@ function Inventory() {
           return fruit;
         });
       });
+      setNewQuantities({});
     })
     .catch((error) => {
       if (error.response) {
@@ -66,29 +65,31 @@ function Inventory() {
     });
   };
 
-  const handleDelete = (fruitId) => {
+  const handleDelete = (fruitId, fruitName) => {
+    const userConfirmed = window.confirm(`Confirm Delete ${fruitName}, ID: ${fruitId}?`);
 
-    axios.post(`${apiUrl}/store/deleteFruit`, {
-      fruitId: fruitId,
-    }, { 
-      headers: { accessToken: localStorage.getItem("accessToken") } 
-    }).then((response) => {
-      console.log(response);
-      setListOfFruits(prevFruits => {
-        return prevFruits.filter(fruit => fruit.id !== fruitId);
+    if (userConfirmed) {
+      axios.post(`${apiUrl}/store/deleteFruit`, {
+        fruitId: fruitId,
+      }, { 
+        headers: { accessToken: localStorage.getItem("accessToken") } 
+      }).then((response) => {
+        setListOfFruits(prevFruits => {
+          return prevFruits.filter(fruit => fruit.id !== fruitId);
+        });
+      })
+      .catch((error) => {
+        if (error.response) {
+          // Set errorMessage from the server's response
+          console.error('An error occurred:', error.response.data.message);
+          alert(error.response.data.message);
+        } else {
+          // Handle other types of errors (e.g., network errors)
+          console.error("An error occurred. Please check your connection and try again.")
+          alert("An error occurred. Please check your connection and try again.");
+        }
       });
-    })
-    .catch((error) => {
-      if (error.response) {
-        // Set errorMessage from the server's response
-        console.error('An error occurred:', error.response.data.message);
-        alert(error.response.data.message);
-      } else {
-        // Handle other types of errors (e.g., network errors)
-        console.error("An error occurred. Please check your connection and try again.")
-        alert("An error occurred. Please check your connection and try again.");
-      }
-    });
+    };
   };
 
   const submitForm = () => {
@@ -99,7 +100,6 @@ function Inventory() {
     }], { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
     }).then((response) => {
-      console.log(response);
       // optimistic UI update
       setListOfFruits(prevState => {
         return [...prevState,
@@ -111,6 +111,9 @@ function Inventory() {
           }
         ]
       })
+      setFruitName("");
+      setFruitPrice("");
+      setFruitQuantity("");
     })
     .catch((error) => {
       if (error.response) {
@@ -184,7 +187,7 @@ function Inventory() {
                 />
                 <button onClick={() => handleSubmit(fruit.id, newQuantities[fruit.id])}>Amend Stock</button>
               </td>
-              <td><button onClick={() => handleDelete(fruit.id)}>Delete</button></td>
+              <td><button onClick={() => handleDelete(fruit.id, fruit.name)}>Delete</button></td>
             </tr>
           )
         })}

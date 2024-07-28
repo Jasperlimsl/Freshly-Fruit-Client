@@ -1,6 +1,6 @@
 import './App.css';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import {createContext, useEffect, useState} from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { createContext, useEffect, useState } from 'react';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
@@ -9,7 +9,7 @@ import Layout from './pages/Layout';
 import History from './pages/History';
 import Fulfillment from './pages/Fulfillment';
 import Inventory from './pages/Inventory';
-import PageNotFound from './pages/PageNotFound';
+import ProtectedRoute from './pages/ProtectedRoute';
 import axios from 'axios';
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -21,8 +21,10 @@ function App() {
     username: "",
     id: 0,
     status: false,
-    role: "customer"
+    role: ""
   });
+
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -48,11 +50,19 @@ function App() {
           console.error("An error occurred. Please check your connection and try again.");
           alert("An error occurred. Please check your connection and try again.");
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
     } else {
       setAuthState(prevState => ({ ...prevState, status: false }));
+      setLoading(false);
     }
   }, []);
+
+  if (loading) {
+    return <div>Loading...</div>; // Show a loading indicator while checking auth state
+  }
 
   return (
     <div className="App">
@@ -65,10 +75,26 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/home' element={<Home />} />
               <Route path='/store' element={<Store />} />
-              <Route path='/history' element={<History />} />
-              <Route path='/fulfillment' element={<Fulfillment />} />
-              <Route path='/Inventory' element={<Inventory />} />
-              <Route path='*' element={<PageNotFound />} />
+
+              <Route path='/history' element={
+                <ProtectedRoute roles={['customer']}>
+                  <History />
+                </ProtectedRoute>
+              } />
+
+              <Route path='/fulfillment' element={
+                <ProtectedRoute roles={['admin']}>
+                  <Fulfillment />
+                </ProtectedRoute>                
+              } />
+
+              <Route path="/inventory" element={
+                <ProtectedRoute roles={['admin']}>
+                  <Inventory />
+                </ProtectedRoute>
+              } />
+
+              <Route path='*' element={<Navigate to="/" />} />
             </Route>
           </Routes>
         </BrowserRouter>

@@ -31,7 +31,6 @@ function Register() {
     axios.post(`${apiUrl}/users/register`, enhancedData)
     .then((response) => {
         alert(response.data);
-        console.log(response.data);
         navigate("/login");
       }
     )

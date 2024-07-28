@@ -21,30 +21,26 @@ function Layout() {
         <img className="logo" src={image} alt="logo"/>
         <nav>
           <ul className="nav_links">
+          <li><Link to='/'> Home </Link></li>   
+          <li><Link to='/store'> Store </Link></li> 
+
             { authState.status ? (
                 <>
-                  <li><Link to='/'> Home </Link></li>   
-                  <li><Link to='/store'> Store </Link></li> 
-                  { authState.role === "customer" && <li><Link to='/history'> Order History </Link></li> } 
+                  { authState.role === "customer" && <li><Link to='/history'> Order History </Link></li> }
+                  { authState.role === "admin" && (
+                  <>
+                    <li><Link to='/fulfillment'>Order Fulfillment</Link></li>
+                    <li><Link to='/Inventory'>Inventory</Link></li>
+                  </>
+                  )} 
+                  <li><button onClick={logout}>Logout</button></li>
                 </>
               ) :  (
                 <>
-                  <li><Link to='/'> Home </Link></li>   
                   <li><Link to='/register'> Register </Link></li>
                   <li><Link to='/login'> Login </Link></li>
-                  <li><Link to='/store'> Store </Link></li>
                 </>
-              )
-            }
-            {
-              authState.role === "admin" && (
-                <>
-                  <li><Link to='/fulfillment'>Order Fulfillment</Link></li>
-                  <li><Link to='/Inventory'>Inventory</Link></li>
-                </>
-              )
-            }
-            { authState.status && <li><button onClick={logout}>Logout</button></li> }
+              )}
           </ul>
         </nav>
       </div>

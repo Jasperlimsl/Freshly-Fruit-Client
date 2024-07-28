@@ -11,7 +11,6 @@ function Store() {
 
   useEffect(() => {
     axios.get(`${apiUrl}/store`).then((response) => {
-      console.log(response)
       setListOfFruits(response.data);
     }).catch((error) =>{
       if (error.response) {
@@ -49,7 +48,7 @@ function Store() {
     if (totalOrderPrice <= 0) {
       alert("You are submitting an Empty Order!")
     } else {
-      const userConfirmed = window.confirm("Are you sure you want to submit the order?");
+      const userConfirmed = window.confirm("Confirm Submit?");
 
       if (userConfirmed) {
         axios.post(`${apiUrl}/orders/submitOrder`, {
@@ -59,7 +58,6 @@ function Store() {
         }, { 
           headers: { accessToken: localStorage.getItem("accessToken") } 
         }).then((response) => {
-          console.log(response);
           setListOfFruits(prevFruits => prevFruits.map(fruit => {
             const orderedQuantity = parseInt(orderQuantity[fruit.id]) || 0;
             if (orderedQuantity > 0) {
@@ -70,6 +68,7 @@ function Store() {
             }
             return fruit;
           }));
+          setOrderQuantity({});
         })
         .catch((error) => {
           if (error.response) {
@@ -83,13 +82,6 @@ function Store() {
       }
     };
   };
-
-    // Calculate the selected fruits
-    const selectedFruits = listOfFruits.filter(fruit => {
-      const quantity = parseInt(orderQuantity[fruit.id]) || 0;
-      return quantity > 0;
-    });
-    console.log(selectedFruits);
 
   return (
     <div className="store-layout">

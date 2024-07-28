@@ -16,7 +16,6 @@ function History() {
           accessToken: localStorage.getItem('accessToken'),
         },
       }).then((response) => {
-        console.log(response);
         setOrders(response.data);
       })
       .catch((error) => {

@@ -16,7 +16,6 @@ function Fulfillment() {
           accessToken: localStorage.getItem('accessToken')
         }
       }).then((response) => {
-        console.log(response.data);
         setOrders(response.data);
       })
     }
@@ -29,8 +28,6 @@ function Fulfillment() {
     }, { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
     }).then((response) => {
-      console.log(response);
-
       // optimistic update of the UI
       setOrders(prevState =>
         prevState.map(order =>
@@ -47,8 +44,6 @@ function Fulfillment() {
     }, { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
     }).then((response) => {
-      console.log(response);
-
       // optimistic update of the UI
       setOrders(prevState =>
         prevState.map(order =>
