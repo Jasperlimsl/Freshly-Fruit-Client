@@ -14,12 +14,10 @@ function Store() {
       setListOfFruits(response.data);
     }).catch((error) =>{
       if (error.response) {
-        // Set errorMessage from the server's response
-        console.error('An error occurred:', error.response.data.message);
+        // Set error message from the server's response
         alert(error.response.data.message);
       } else {
         // Handle other types of errors (e.g., network errors)
-        console.error("An error occurred. Please check your connection and try again.")
         alert("An error occurred. Please check your connection and try again.");
       }
     })
@@ -35,8 +33,7 @@ function Store() {
     }));
   };
 
-
-
+  // calculate total order price based on list of fruits indicated on UI
   const totalOrderPrice = useMemo(() => {
     return listOfFruits.reduce((total, fruit) => {
       const quantity = parseInt(orderQuantity[fruit.id]) || 0;
@@ -44,6 +41,7 @@ function Store() {
     }, 0);
   }, [listOfFruits, orderQuantity]);
 
+  // Handles the submit of order of fruits 
   const handleSubmit = () => {
     if (totalOrderPrice <= 0) {
       alert("You are submitting an Empty Order!")
@@ -72,10 +70,10 @@ function Store() {
         })
         .catch((error) => {
           if (error.response) {
-            console.error('An error occurred:', error.response.data.message);
+          // Set error message from the server's response
             alert(error.response.data.message);
           } else {
-            console.error("An error occurred. Please check your connection and try again.")
+            // Handle other errors, i.e. network error
             alert("An error occurred. Please check your connection and try again.");
           }
         });

@@ -20,7 +20,7 @@ li a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 5%;
+  padding: 20px 5%;
   background-color: rgb(232, 156, 99);
 }
 
@@ -42,8 +42,8 @@ li a {
 }
 
 .logo {
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border-radius: 50%; 
 }
 
@@ -249,6 +249,8 @@ button:hover {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  display: block; /* Ensure the table can shrink in width */
 }
 
 .order-fulfillment-table th, .order-fulfillment-table td {
@@ -281,6 +283,8 @@ button:hover {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  display: block; /* Ensure the table can shrink in width */
 }
 
 .order-history-table th, .order-history-table td {
@@ -336,6 +340,8 @@ button:hover {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
+  display: block; /* Ensure the table can shrink in width */
 }
 
 .inventory-table th, .inventory-table td {
@@ -355,6 +361,7 @@ button:hover {
   margin-right: 10px; /* Space between input and button */
 }
 
+/* CSS for handheld devices */
 @media (max-width: 700px) {
 
   .Navbar {
@@ -454,6 +461,12 @@ button:hover {
 
   .registerForm label{
     font-size: 0.8em;
+  }
+
+  button {
+    font-size: 0.7em;
+    margin-top: 5px;
+    padding: 8px;
   }
 }
 

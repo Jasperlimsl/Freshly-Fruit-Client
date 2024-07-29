@@ -55,12 +55,10 @@ function Login() {
     })
     .catch((error) => {
       if (error.response) {
-        // Set errorMessage from the server's response
-        console.error('An error occurred:', error.response.data.message);
+        // Set error message from the server's response
         alert(error.response.data.message);
       } else {
         // Handle other types of errors (e.g., network errors)
-        console.error("An error occurred. Please check your connection and try again.")
         alert("An error occurred. Please check your connection and try again.");
       }
     })

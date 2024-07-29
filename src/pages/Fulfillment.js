@@ -9,48 +9,75 @@ function Fulfillment() {
   const { authState } = useContext(AuthContext);
   const [orders, setOrders] = useState([]);
 
+  // Populates the list of orders, fulfillment status and other relevant info
   useEffect(() => {
     if (authState.status && authState.role === "admin") {
       axios.get(`${apiUrl}/orders/orderFulfillmentList`, {
         headers: {
           accessToken: localStorage.getItem('accessToken')
         }
-      }).then((response) => {
+      })
+      .then((response) => {
         setOrders(response.data);
+      })
+      .catch((error) => {
+        if (error.response) {
+        // Set error message from the server's response
+          alert(error.response.data.message);
+        } else {
+          // Handle other types of errors (e.g., network errors)
+          alert("An error occurred. Please check your connection and try again.");
+        }
       })
     }
   }, [authState])
 
   const handleFulfilOrder = (orderId) => {
-
     axios.post(`${apiUrl}/orders/fulfilOrder`, {
       ordersId: orderId
     }, { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
     }).then((response) => {
-      // optimistic update of the UI
+      //Update of the UI
       setOrders(prevState =>
         prevState.map(order =>
           order.id === orderId ? { ...order, fulfilled: true } : order
         )
       );
     })
+    .catch((error) => {
+      if (error.response) {
+        // Set error message from the server's response
+        alert(error.response.data.message);
+      } else {
+        // Handle other errors, i.e. network error
+        alert("An error occurred. Please check your connection and try again.");
+      }
+    });
   }
 
   const undoFulfilOrder = (orderId) => {
-
     axios.post(`${apiUrl}/orders/undoFulfilOrder`, {
       ordersId: orderId
     }, { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
     }).then((response) => {
-      // optimistic update of the UI
+      // Update of the UI
       setOrders(prevState =>
         prevState.map(order =>
           order.id === orderId ? { ...order, fulfilled: false } : order
         )
       );
     })
+    .catch((error) => {
+      if (error.response) {
+        // Set error message from the server's response
+        alert(error.response.data.message);
+      } else {
+        // Handle other errors, i.e. network error
+        alert("An error occurred. Please check your connection and try again.");
+      }
+    });
   }
 
   return (

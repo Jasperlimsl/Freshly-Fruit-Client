@@ -18,7 +18,7 @@ function Layout() {
   return (
     <>
       <div className="Navbar">
-        <img className="logo" src={image} alt="logo"/>
+        { authState.status ? <h2>{`Welcome ${authState.username}`}</h2> : <img className="logo" src={image} alt="logo"/> }
         <nav>
           <ul className="nav_links">
           <li><Link to='/'> Home </Link></li>   

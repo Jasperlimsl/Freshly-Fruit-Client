@@ -10,21 +10,20 @@ function Inventory() {
   const [fruitPrice, setFruitPrice] = useState("")
   const [fruitQuantity, setFruitQuantity] = useState("")
 
+  // Populates the Fruit Inventory data
   useEffect(() => {
     axios.get(`${apiUrl}/store`).then((response) => {
       setListOfFruits(response.data);
     }).catch((error) =>{
       if (error.response) {
-        // Set errorMessage from the server's response
-        console.error('An error occurred:', error.response.data.message);
+        // Set error message from the server's response
         alert(error.response.data.message);
       } else {
         // Handle other types of errors (e.g., network errors)
-        console.error("An error occurred. Please check your connection and try again.")
         alert("An error occurred. Please check your connection and try again.");
       }
     })
-  }, [])
+  }, []);
 
   const handleOrderQuantityChange = (fruitId, event) => {
     const quantity = parseInt(event.target.value, 10);
@@ -34,8 +33,8 @@ function Inventory() {
     }));
   }
 
+  // handles amendment of fruit's stock
   const handleSubmit = (fruitId, newQuantity) => {
-
     axios.post(`${apiUrl}/store/updateQuantity`, {
       fruitId: fruitId,
       newQuantity: newQuantity
@@ -54,12 +53,10 @@ function Inventory() {
     })
     .catch((error) => {
       if (error.response) {
-        // Set errorMessage from the server's response
-        console.error('An error occurred:', error.response.data.message);
+        // Set error message from the server's response
         alert(error.response.data.message);
       } else {
         // Handle other types of errors (e.g., network errors)
-        console.error("An error occurred. Please check your connection and try again.")
         alert("An error occurred. Please check your connection and try again.");
       }
     });
@@ -80,18 +77,17 @@ function Inventory() {
       })
       .catch((error) => {
         if (error.response) {
-          // Set errorMessage from the server's response
-          console.error('An error occurred:', error.response.data.message);
+        // Set error message from the server's response
           alert(error.response.data.message);
         } else {
           // Handle other types of errors (e.g., network errors)
-          console.error("An error occurred. Please check your connection and try again.")
           alert("An error occurred. Please check your connection and try again.");
         }
       });
     };
   };
 
+  // handles adding of new fruit to database
   const submitForm = () => {
     axios.post(`${apiUrl}/store/addFruit`, [{
       "name": fruitName,
@@ -118,11 +114,9 @@ function Inventory() {
     .catch((error) => {
       if (error.response) {
         // Set errorMessage from the server's response
-        console.error('An error occurred:', error.response.data.message);
         alert(error.response.data.message);
       } else {
         // Handle other types of errors (e.g., network errors)
-        console.error("An error occurred. Please check your connection and try again.")
         alert("An error occurred. Please check your connection and try again.");
       }
     });
