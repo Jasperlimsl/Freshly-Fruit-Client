@@ -115,7 +115,7 @@ function Fulfillment() {
                 </td>
                 <td>{order.usersId}</td>
                 <td>{order.users.username}</td>
-                <td>{order.total_price_cents}</td>
+                <td>${(order.total_price_cents/100).toFixed(2)}</td>
                 <td>{order.fulfilled? "Yes" : "No"}</td>
                 <td>
                   {order.fulfilled ? (

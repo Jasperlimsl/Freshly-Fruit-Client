@@ -243,6 +243,7 @@ button:hover {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px grey;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
 }
 
 .order-fulfillment-table {
@@ -277,14 +278,14 @@ button:hover {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px grey;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
 }
 
 .order-history-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
-  display: block; /* Ensure the table can shrink in width */
+
 }
 
 .order-history-table th, .order-history-table td {
@@ -310,9 +311,7 @@ button:hover {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 1em;
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
-  display: block; /* Ensure the table can shrink in width */
-  aspect-ratio: 5 / 1;
+
 }
 
 .add-fruit-table input {
@@ -334,20 +333,20 @@ button:hover {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 2px 4px grey;
+  overflow-x: auto; /* Allow horizontal scrolling if needed */
 }
 
 .inventory-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  overflow-x: auto; /* Allow horizontal scrolling if needed */
-  display: block; /* Ensure the table can shrink in width */
 }
 
 .inventory-table th, .inventory-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
+  
 }
 
 .inline-block {
@@ -411,15 +410,16 @@ button:hover {
 
   .products-checkout {
     width: 100%;
-    max-height: 30vh;
+    max-height: 25vh;
     border-radius: 0;
     padding: 15px;
+    font-size: x-small;
   }
 
   .order-fulfillment-container,
   .order-history-container,
   .inventory-container {
-    margin: 10px 5%;
+    margin: 10px 5px;
     padding: 10px;
     width: 90%;
     font-size: xx-small;
