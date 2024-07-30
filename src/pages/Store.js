@@ -55,8 +55,8 @@ function Store() {
   }, [listOfFruits, orderQuantity]);
 
   // Handles the submit of order of fruits
-  const handleSubmit = () => {
-    // Filter out fruits with quantity 0 and improper values like "-" 
+  const handleSubmitOrder = () => {
+    // Filter out fruits with quantity 0 and improper values 
     const filteredOrderQuantity = Object.keys(orderQuantity).reduce((acc, fruitId) => {
       if (orderQuantity[fruitId] > 0) {
         acc[fruitId] = orderQuantity[fruitId];
@@ -138,7 +138,7 @@ function Store() {
           })}
         </ol>
         <div>Total Price: ${(Math.round(totalOrderPrice) / 100).toFixed(2)}</div>
-        {authState.status ? <button className="submit-button" onClick={handleSubmit}>Submit Order</button> : <span className="errors">Please Login to Order</span>}
+        {authState.status ? <button className="submit-button" onClick={handleSubmitOrder}>Submit Order</button> : <span className="errors">Please Login to Order</span>}
       </div>
     </div>
   )
