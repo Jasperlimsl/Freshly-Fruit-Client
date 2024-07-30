@@ -64,6 +64,8 @@ function Store() {
       return acc;
     }, {});
 
+    console.log(orderQuantity);
+
     if (Object.keys(filteredOrderQuantity).length === 0) {
       alert("You are submitting an Empty Order!");
     } else {
@@ -72,13 +74,13 @@ function Store() {
       if (userConfirmed) {
         axios.post(`${apiUrl}/orders/submitOrder`, {
           usersId: authState.id,
-          fruitsOrdered: orderQuantity,
+          fruitsOrdered: filteredOrderQuantity,
           total_price_cents: totalOrderPrice,
         }, { 
           headers: { accessToken: localStorage.getItem("accessToken") } 
         }).then((response) => {
           setListOfFruits(prevFruits => prevFruits.map(fruit => {
-            const orderedQuantity = parseInt(orderQuantity[fruit.id]) || 0;
+            const orderedQuantity = parseInt(filteredOrderQuantity[fruit.id]) || 0;
             if (orderedQuantity > 0) {
               return {
                 ...fruit,
