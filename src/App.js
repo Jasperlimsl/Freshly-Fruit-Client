@@ -44,10 +44,10 @@ function App() {
       })
       .catch((error) => {
         if (error.response) {
+          // If a error response from server, log the user out and delete token
           setAuthState(prevState => ({ ...prevState, status: false }));
           localStorage.removeItem("accessToken");
         } else {
-          console.error("An error occurred. Please check your connection and try again.");
           alert("An error occurred. Please check your connection and try again.");
         }
       })

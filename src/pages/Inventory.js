@@ -5,7 +5,7 @@ const apiUrl = process.env.REACT_APP_API_URL;
 function Inventory() {
 
   const [listOfFruits, setListOfFruits] = useState([]);
-  const [newQuantities, setNewQuantities] = useState({});
+  const [stockQuantity, setStockQuantity] = useState({});
   const [fruitName, setFruitName] = useState("")
   const [fruitPrice, setFruitPrice] = useState("")
   const [fruitQuantity, setFruitQuantity] = useState("")
@@ -28,29 +28,29 @@ function Inventory() {
 
   const handleOrderQuantityChange = (fruitId, event) => {
     const quantity = parseInt(event.target.value, 10);
-    setNewQuantities(prevState => ({
+    setStockQuantity(prevState => ({
       ...prevState,
       [fruitId]: quantity
     }));
   }
 
   // handles amendment of fruit's stock
-  const handleSubmit = (fruitId, newQuantity) => {
+  const handleAmendStock = (fruitId, stockQuantity) => {
     axios.post(`${apiUrl}/store/updateQuantity`, {
       fruitId: fruitId,
-      newQuantity: newQuantity
+      stockQuantity: stockQuantity
     }, { 
       headers: { accessToken: localStorage.getItem("accessToken") } 
     }).then((response) => {
       setListOfFruits(prevFruits => {
         return prevFruits.map(fruit => {
           if (fruit.id === fruitId) {
-            return { ...fruit, stock: newQuantity };
+            return { ...fruit, stock: stockQuantity };
           }
           return fruit;
         });
       });
-      setNewQuantities({});
+      setStockQuantity({});
     })
     .catch((error) => {
       if (error.response) {
@@ -64,7 +64,7 @@ function Inventory() {
   };
 
   const handleDelete = (fruitId, fruitName) => {
-    const userConfirmed = window.confirm(`Confirm Delete ${fruitName}, ID: ${fruitId}?`);
+    const userConfirmed = window.confirm(`Confirm Delete ${fruitName}, Fruit #${fruitId}?`);
 
     if (userConfirmed) {
       axios.post(`${apiUrl}/store/deleteFruit`, {
@@ -89,7 +89,7 @@ function Inventory() {
   };
 
   // handles adding of new fruit to database
-  const submitForm = () => {
+  const handleAddFruit = () => {
     const fruitExists = listOfFruits.some(fruit => fruit.name.toLowerCase() === fruitName.toLowerCase());
 
     if (fruitExists) {
@@ -154,7 +154,7 @@ function Inventory() {
               <input type="number" placeholder='Stock' value={fruitQuantity} onChange={(event) => {setFruitQuantity(event.target.value)}} />
             </td>
             <td>
-            <button onClick={submitForm}>Add Fruit</button>
+            <button onClick={handleAddFruit}>Add Fruit</button>
             </td>
           </tr>
           {addFruitError && <span className="errors">{addFruitError}</span>}
@@ -188,10 +188,10 @@ function Inventory() {
                   type="number"
                   min="0"
                   step="1"
-                  value={newQuantities[fruit.id] || ""}
+                  value={stockQuantity[fruit.id] || ""}
                   onChange={(event) => handleOrderQuantityChange(fruit.id, event)}
                 />
-                <button onClick={() => handleSubmit(fruit.id, newQuantities[fruit.id])}>Amend Stock</button>
+                <button onClick={() => handleAmendStock(fruit.id, stockQuantity[fruit.id])}>Amend Stock</button>
               </td>
               <td><button onClick={() => handleDelete(fruit.id, fruit.name)}>Delete</button></td>
             </tr>

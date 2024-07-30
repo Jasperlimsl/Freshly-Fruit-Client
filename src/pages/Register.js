@@ -36,7 +36,6 @@ function Register() {
       }
     )
     .catch((error) => {
-      console.log(error)
       if (error.response) {
         if (error.response.status === 400 && error.response.data.message) {
           // display error at username input that username already in use

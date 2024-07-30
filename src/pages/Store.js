@@ -123,7 +123,7 @@ function Store() {
             if (fruit && orderQuantity[fruitId] > 0) {
               return (
                 <li key={fruitId}>
-                  {fruit.name}: {orderQuantity[fruitId]} @ ${(fruit.price_cents / 100).toFixed(2)} each
+                  {fruit.name}: {orderQuantity[fruitId]} at ${(fruit.price_cents / 100).toFixed(2)} each
                 </li>
               );
             }
