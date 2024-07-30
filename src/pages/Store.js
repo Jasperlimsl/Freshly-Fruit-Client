@@ -26,8 +26,7 @@ function Store() {
 
   // Handle change in purchase quantity input
   const handleOrderQuantityChange = (fruitId, event) => {
-    // form input elements always return a string, so need to convet it to integer
-    const value = event.target.value;
+    const value = Math.max(0, parseInt(event.target.value) || 0); // Prevent negative numbers
     const fruit = listOfFruits.find(f => f.id === fruitId);
 
     if (value > fruit.stock) {
@@ -55,10 +54,18 @@ function Store() {
     }, 0);
   }, [listOfFruits, orderQuantity]);
 
-  // Handles the submit of order of fruits 
+  // Handles the submit of order of fruits
   const handleSubmit = () => {
-    if (totalOrderPrice <= 0) {
-      alert("You are submitting an Empty Order!")
+    // Filter out fruits with quantity 0 and improper values like "-" 
+    const filteredOrderQuantity = Object.keys(orderQuantity).reduce((acc, fruitId) => {
+      if (orderQuantity[fruitId] > 0) {
+        acc[fruitId] = orderQuantity[fruitId];
+      }
+      return acc;
+    }, {});
+
+    if (Object.keys(filteredOrderQuantity).length === 0) {
+      alert("You are submitting an Empty Order!");
     } else {
       const userConfirmed = window.confirm("Confirm Submit?");
 
