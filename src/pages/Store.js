@@ -131,7 +131,7 @@ function Store() {
           })}
         </ol>
         <div>Total Price: ${(Math.round(totalOrderPrice) / 100).toFixed(2)}</div>
-        {authState.status && <button className="submit-button" onClick={handleSubmit}>Submit Order</button>}
+        {authState.status ? <button className="submit-button" onClick={handleSubmit}>Submit Order</button> : <span className="errors">Please Login to Order</span>}
       </div>
     </div>
   )
