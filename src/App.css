@@ -306,12 +306,12 @@ button:hover {
 /* Inventory */
 
 .add-fruit-table {
+  width: 100%;
   background-color: #beb5b5;
   padding: 0.5em;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 1em;
-
 }
 
 .add-fruit-table input {
@@ -384,7 +384,7 @@ button:hover {
   }
 
   h1, h2 {
-    font-size:smaller;
+    font-size: small;
   }
 
   .logoMain {

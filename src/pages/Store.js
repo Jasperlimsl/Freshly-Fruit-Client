@@ -8,6 +8,7 @@ function Store() {
   const {authState} = useContext(AuthContext);
   const [listOfFruits, setListOfFruits] = useState([]);
   const [orderQuantity, setOrderQuantity] = useState({});
+  const [errorMessages, setErrorMessages] = useState({});
 
   useEffect(() => {
     axios.get(`${apiUrl}/store`).then((response) => {
@@ -24,12 +25,25 @@ function Store() {
   }, []);
 
   // Handle change in purchase quantity input
-  const handleOrderQuantityChange = (fruit_id, event) => {
+  const handleOrderQuantityChange = (fruitId, event) => {
     // form input elements always return a string, so need to convet it to integer
     const value = event.target.value;
+    const fruit = listOfFruits.find(f => f.id === fruitId);
+
+    if (value > fruit.stock) {
+      setErrorMessages(prevState => ({
+        ...prevState,
+        [fruitId]: `Insufficient Stock`
+      }));
+    } else {
+      setErrorMessages(prevState => ({
+        ...prevState,
+        [fruitId]: null
+      }));
+    }
     setOrderQuantity(prevState => ({
         ...prevState,
-        [fruit_id]: value
+        [fruitId]: value
     }));
   };
 
@@ -97,6 +111,7 @@ function Store() {
               value={orderQuantity[fruit.id] || ""}
               onChange={(event) => handleOrderQuantityChange(fruit.id, event)}
             />
+            {errorMessages[fruit.id] && <div className="errors">{errorMessages[fruit.id]}</div>}
           </div>
         ))}
       </div>

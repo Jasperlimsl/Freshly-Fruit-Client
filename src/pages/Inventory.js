@@ -9,6 +9,7 @@ function Inventory() {
   const [fruitName, setFruitName] = useState("")
   const [fruitPrice, setFruitPrice] = useState("")
   const [fruitQuantity, setFruitQuantity] = useState("")
+  const [addFruitError, setAddFruitError] = useState('');
 
   // Populates the Fruit Inventory data
   useEffect(() => {
@@ -89,6 +90,14 @@ function Inventory() {
 
   // handles adding of new fruit to database
   const submitForm = () => {
+    const fruitExists = listOfFruits.some(fruit => fruit.name.toLowerCase() === fruitName.toLowerCase());
+
+    if (fruitExists) {
+      setAddFruitError(`${fruitName} already exists.`);
+    } else {
+      setAddFruitError('');
+    }
+
     axios.post(`${apiUrl}/store/addFruit`, [{
       "name": fruitName,
       "price_cents": fruitPrice,
@@ -148,7 +157,10 @@ function Inventory() {
             <button onClick={submitForm}>Add Fruit</button>
             </td>
           </tr>
+          {addFruitError && <span className="errors">{addFruitError}</span>}
+
         </tbody>
+
       </table>
 
       <table className="inventory-table">
